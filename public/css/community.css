@@ -1,0 +1,833 @@
+/* ============================================================
+   PARFUM.IN — COMMUNITY / COLLECTIONS / FAVORITES / PROFILE
+   File ini melengkapi app.css (semua class di bawah ini belum
+   punya style sama sekali, itu sebabnya tampilannya acak-acakan)
+   ============================================================ */
+
+:root {
+    --primary:       #111111;
+    --primary-soft:  rgba(17,17,17,0.06);
+    --like:          #e0245e;
+    --radius-lg:     14px;
+    --radius-md:     10px;
+}
+body.dark-mode {
+    --primary:       #eeeeee;
+    --primary-soft:  rgba(255,255,255,0.07);
+}
+
+/* ============================================================
+   1. SHARED — tombol & elemen umum
+   ============================================================ */
+.btn-new-collection {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 9px 18px;
+    background: var(--primary); color: var(--bg);
+    border: none; border-radius: 100px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.62rem; font-weight: 700;
+    letter-spacing: 0.07em; text-transform: uppercase;
+    cursor: pointer; white-space: nowrap;
+    transition: opacity 0.2s, transform 0.2s;
+}
+.btn-new-collection:hover { opacity: 0.85; transform: translateY(-1px); }
+
+.btn-auth-submit {
+    padding: 10px 20px;
+    background: var(--primary); color: var(--bg);
+    border: none; border-radius: 100px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.05em;
+    cursor: pointer; transition: opacity 0.2s;
+}
+.btn-auth-submit:hover { opacity: 0.85; }
+
+.btn-cancel-edit {
+    padding: 9px 18px;
+    background: transparent; color: var(--text-muted);
+    border: 1px solid var(--border); border-radius: 100px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.62rem; font-weight: 600;
+    cursor: pointer; transition: all 0.2s;
+}
+.btn-cancel-edit:hover { border-color: var(--text); color: var(--text); }
+
+.reply-submit-btn {
+    padding: 8px 20px;
+    background: var(--primary); color: var(--bg);
+    border: none; border-radius: 100px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.62rem; font-weight: 700; letter-spacing: 0.05em;
+    cursor: pointer; transition: opacity 0.2s;
+}
+.reply-submit-btn:hover { opacity: 0.85; }
+
+/* Pagination Laravel (default Tailwind markup → dibuat netral) */
+.community-page .pagination,
+.my-collections-page .pagination,
+.profile-page .pagination {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    justify-content: center; list-style: none;
+}
+.community-page nav[role="navigation"] svg,
+.my-collections-page nav[role="navigation"] svg { width: 14px; height: 14px; }
+.community-page nav[role="navigation"] a,
+.community-page nav[role="navigation"] span,
+.my-collections-page nav[role="navigation"] a,
+.my-collections-page nav[role="navigation"] span {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 32px; height: 32px; padding: 0 10px;
+    border: 1px solid var(--border); border-radius: 8px;
+    background: var(--card-bg); color: var(--text-muted);
+    font-size: 0.65rem; font-weight: 600;
+    transition: all 0.2s;
+}
+.community-page nav[role="navigation"] a:hover,
+.my-collections-page nav[role="navigation"] a:hover {
+    border-color: var(--text); color: var(--text);
+}
+.community-page nav[role="navigation"] [aria-current="page"] span,
+.my-collections-page nav[role="navigation"] [aria-current="page"] span {
+    background: var(--primary); color: var(--bg); border-color: var(--primary);
+}
+.community-page nav[role="navigation"] p { display: none; }
+
+/* ============================================================
+   2. COMMUNITY PAGE — header + tabs
+   ============================================================ */
+.community-page {
+    max-width: 760px; margin: 0 auto;
+    padding: 40px 24px 80px;
+}
+.community-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas: "title action" "divider divider";
+    align-items: center; gap: 10px 16px;
+    margin-bottom: 22px;
+}
+.community-title {
+    grid-area: title;
+    font-size: 1.45rem; font-weight: 800;
+    letter-spacing: -0.01em; color: var(--text);
+}
+.community-header .btn-new-collection { grid-area: action; }
+.community-title-divider {
+    grid-area: divider;
+    display: flex; align-items: center; gap: 10px;
+    color: var(--text-light);
+}
+.community-title-divider span {
+    flex: 1; height: 1px; background: var(--border);
+}
+.community-title-divider svg { flex-shrink: 0; }
+
+/* ── Tabs ── */
+.feed-tabs {
+    display: flex; gap: 4px;
+    padding: 4px;
+    background: var(--bg-secondary);
+    border-radius: 100px;
+    margin-bottom: 26px;
+}
+.feed-tab {
+    flex: 1;
+    display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+    padding: 9px 14px;
+    border-radius: 100px;
+    font-size: 0.66rem; font-weight: 700;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    color: var(--text-muted);
+    transition: all 0.22s;
+}
+.feed-tab:hover { color: var(--text); }
+.feed-tab.active {
+    background: var(--card-bg); color: var(--text);
+    box-shadow: var(--shadow-sm);
+}
+.feed-tab svg { flex-shrink: 0; }
+
+/* ── Empty state ── */
+.feed-empty {
+    text-align: center; padding: 70px 20px;
+    border: 1px dashed var(--border); border-radius: var(--radius-lg);
+    color: var(--text-muted);
+}
+.feed-empty-icon { font-size: 2.4rem; margin-bottom: 10px; }
+.feed-empty p { font-size: 0.76rem; }
+
+/* ============================================================
+   3. FORM DISKUSI BARU
+   ============================================================ */
+.new-discussion-box {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 18px;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow-sm);
+}
+.discussion-title-input,
+.discussion-body-input,
+.feed-reply-textarea,
+.reply-textarea {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 11px 14px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.74rem; color: var(--text);
+    transition: border-color 0.2s;
+    resize: vertical;
+}
+.discussion-title-input::placeholder,
+.discussion-body-input::placeholder,
+.feed-reply-textarea::placeholder,
+.reply-textarea::placeholder { color: var(--text-light); }
+.discussion-title-input:focus,
+.discussion-body-input:focus,
+.feed-reply-textarea:focus,
+.reply-textarea:focus { outline: none; border-color: var(--text); }
+.discussion-title-input { font-weight: 600; margin-bottom: 10px; }
+.discussion-body-input { min-height: 96px; line-height: 1.6; }
+.discussion-form-actions {
+    display: flex; justify-content: flex-end; gap: 8px;
+    margin-top: 12px;
+}
+
+/* ============================================================
+   4. FEED — kartu diskusi
+   ============================================================ */
+.feed-list { display: flex; flex-direction: column; gap: 14px; }
+
+.discussion-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 18px;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+.discussion-card:hover {
+    border-color: var(--text-light);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Header user */
+.feed-card-header {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 12px;
+}
+.feed-user-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    flex-shrink: 0; overflow: hidden;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--bg-secondary); color: var(--text);
+    font-size: 0.72rem; font-weight: 700;
+    border: 1px solid var(--border);
+}
+.feed-user-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.feed-user-info { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+.feed-user-name {
+    font-size: 0.72rem; font-weight: 700; color: var(--text);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.feed-user-name:hover { text-decoration: underline; }
+.feed-card-time { font-size: 0.58rem; color: var(--text-muted); }
+
+/* Menu (...) */
+.feed-card-menu { position: relative; margin-left: auto; }
+.feed-card-menu-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 28px; height: 28px; border-radius: 50%;
+    background: transparent; border: none; cursor: pointer;
+    color: var(--text-muted); transition: background 0.2s, color 0.2s;
+}
+.feed-card-menu-btn:hover { background: var(--bg-secondary); color: var(--text); }
+.feed-card-menu-dropdown {
+    position: absolute; top: 32px; right: 0; z-index: 30;
+    min-width: 160px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+}
+.feed-card-menu-delete {
+    width: 100%; text-align: left;
+    padding: 10px 14px;
+    background: transparent; border: none; cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.66rem; font-weight: 600; color: #e53e3e;
+}
+.feed-card-menu-delete:hover { background: rgba(229,62,62,0.08); }
+
+/* Judul & preview */
+.discussion-card-link { display: block; }
+.discussion-card-title {
+    font-size: 0.92rem; font-weight: 700; line-height: 1.4;
+    color: var(--text); margin-bottom: 6px;
+}
+.discussion-card-link:hover .discussion-card-title { text-decoration: underline; }
+.discussion-card-preview {
+    font-size: 0.72rem; line-height: 1.65; color: var(--text-muted);
+}
+
+/* Aksi */
+.discussion-card-actions {
+    display: flex; align-items: center; gap: 6px;
+    margin-top: 14px; padding-top: 12px;
+    border-top: 1px solid var(--border);
+}
+.btn-like-feed,
+.btn-reply-feed,
+.btn-view-full {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 7px 12px;
+    background: transparent; border: 1px solid transparent;
+    border-radius: 100px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.62rem; font-weight: 600;
+    color: var(--text-muted); cursor: pointer;
+    transition: all 0.2s;
+}
+.btn-like-feed:hover { background: rgba(224,36,94,0.08); color: var(--like); }
+.btn-reply-feed:hover { background: var(--primary-soft); color: var(--text); }
+.btn-like-feed.liked { color: var(--like); }
+.btn-like-feed.liked svg { fill: var(--like); stroke: var(--like); }
+.btn-view-full { margin-left: auto; color: var(--text); font-weight: 700; }
+.btn-view-full:hover { background: var(--bg-secondary); }
+
+/* Preview balasan */
+.feed-replies-preview {
+    margin-top: 12px; padding-top: 12px;
+    border-top: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: 10px;
+}
+.feed-reply-item { display: flex; align-items: flex-start; gap: 9px; }
+.feed-reply-avatar {
+    width: 26px; height: 26px; border-radius: 50%;
+    flex-shrink: 0; overflow: hidden;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--bg-secondary); border: 1px solid var(--border);
+    font-size: 0.58rem; font-weight: 700; color: var(--text);
+}
+.feed-reply-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.feed-reply-content {
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    padding: 8px 12px;
+    min-width: 0;
+}
+.feed-reply-name {
+    display: block;
+    font-size: 0.64rem; font-weight: 700; color: var(--text);
+    margin-bottom: 2px;
+}
+.feed-reply-text {
+    font-size: 0.68rem; line-height: 1.55; color: var(--text-muted);
+    word-break: break-word;
+}
+.feed-see-more {
+    align-self: flex-start;
+    font-size: 0.62rem; font-weight: 600; color: var(--text);
+    padding-left: 35px;
+}
+.feed-see-more:hover { text-decoration: underline; }
+
+/* Form balas inline */
+.feed-reply-form {
+    margin-top: 12px; padding-top: 12px;
+    border-top: 1px solid var(--border);
+}
+.feed-reply-form-inner { display: flex; align-items: flex-start; gap: 9px; }
+.feed-reply-textarea { min-height: 60px; }
+.feed-reply-submit-row {
+    display: flex; justify-content: flex-end; gap: 8px;
+    margin-top: 10px;
+}
+
+/* ============================================================
+   5. DETAIL DISKUSI
+   ============================================================ */
+.discussion-back {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.64rem; font-weight: 600; color: var(--text-muted);
+    margin-bottom: 16px;
+}
+.discussion-back:hover { color: var(--text); }
+
+.discussion-post {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 22px;
+    margin-bottom: 18px;
+}
+.discussion-post-title {
+    font-size: 1.15rem; font-weight: 800; line-height: 1.35;
+    color: var(--text); margin: 4px 0 10px;
+}
+.discussion-post-body {
+    font-size: 0.78rem; line-height: 1.75; color: var(--text);
+    white-space: pre-line;
+}
+.discussion-post-actions {
+    display: flex; align-items: center; gap: 10px;
+    margin-top: 18px; padding-top: 14px;
+    border-top: 1px solid var(--border);
+}
+.btn-like-discussion {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 8px 16px;
+    background: transparent;
+    border: 1px solid var(--border); border-radius: 100px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.64rem; font-weight: 600; color: var(--text-muted);
+    cursor: pointer; transition: all 0.2s;
+}
+.btn-like-discussion:hover { border-color: var(--like); color: var(--like); }
+.btn-like-discussion.liked {
+    border-color: var(--like); color: var(--like);
+    background: rgba(224,36,94,0.07);
+}
+.btn-like-discussion.liked svg { fill: var(--like); stroke: var(--like); }
+.discussion-reply-count { font-size: 0.64rem; color: var(--text-muted); }
+
+/* Form balasan utama */
+.reply-form-wrap {
+    display: flex; align-items: flex-start; gap: 10px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    margin-bottom: 22px;
+}
+.reply-form { flex: 1; min-width: 0; }
+.reply-textarea { min-height: 74px; }
+.reply-textarea-sm { min-height: 54px; font-size: 0.7rem; }
+.reply-form-footer {
+    display: flex; justify-content: flex-end; gap: 8px;
+    margin-top: 10px;
+}
+.reply-login-prompt {
+    text-align: center; padding: 16px;
+    border: 1px dashed var(--border); border-radius: var(--radius-lg);
+    font-size: 0.7rem; color: var(--text-muted);
+    margin-bottom: 22px;
+}
+
+/* Daftar balasan */
+.replies-section { display: flex; flex-direction: column; gap: 12px; }
+.replies-title {
+    font-size: 0.66rem; font-weight: 800;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-muted);
+    padding-bottom: 10px; border-bottom: 1px solid var(--border);
+}
+.reply-item {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 14px 16px;
+}
+.reply-item-nested {
+    background: var(--bg-secondary);
+    border-color: transparent;
+}
+.reply-header { display: flex; align-items: center; gap: 9px; }
+.reply-actions { display: flex; align-items: center; gap: 6px; margin-left: auto; }
+.btn-reply-toggle {
+    padding: 5px 12px;
+    background: transparent; border: 1px solid var(--border);
+    border-radius: 100px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.58rem; font-weight: 600; color: var(--text-muted);
+    cursor: pointer; transition: all 0.2s;
+}
+.btn-reply-toggle:hover { border-color: var(--text); color: var(--text); }
+.btn-delete-reply {
+    padding: 5px 12px;
+    background: transparent; border: 1px solid transparent;
+    border-radius: 100px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.58rem; font-weight: 600; color: #e53e3e;
+    cursor: pointer; transition: background 0.2s;
+}
+.btn-delete-reply:hover { background: rgba(229,62,62,0.09); }
+.reply-body {
+    font-size: 0.73rem; line-height: 1.7; color: var(--text);
+    margin-top: 8px; white-space: pre-line;
+}
+.nested-reply-form { margin-top: 10px; }
+.nested-replies {
+    margin-top: 12px; padding-left: 16px;
+    border-left: 2px solid var(--border);
+    display: flex; flex-direction: column; gap: 10px;
+}
+
+/* ============================================================
+   6. KOLEKSI — grid kartu (community, koleksi saya, profil)
+   ============================================================ */
+.my-collections-page {
+    max-width: 1000px; margin: 0 auto;
+    padding: 40px 24px 80px;
+}
+.my-collections-header {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+    margin-bottom: 26px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+}
+.my-collections-title {
+    font-size: 1.35rem; font-weight: 800; color: var(--text);
+}
+
+.collections-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 18px;
+}
+.collection-card {
+    display: flex; flex-direction: column;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: transform 0.22s, box-shadow 0.22s, border-color 0.22s;
+}
+.collection-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--text-light);
+}
+.collection-card-previews {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--bg-secondary);
+    aspect-ratio: 3 / 2;
+    padding: 2px;
+}
+.collection-card-previews > *:only-child { grid-column: span 3; }
+.collection-card-previews > *:first-child:nth-last-child(2) { grid-column: span 2; }
+.collection-preview-img,
+.collection-preview-empty {
+    display: flex; align-items: center; justify-content: center;
+    background: var(--bg);
+    overflow: hidden;
+}
+.collection-preview-img img {
+    width: 100%; height: 100%; object-fit: contain;
+    padding: 8px;
+    transition: transform 0.3s;
+}
+.collection-card:hover .collection-preview-img img { transform: scale(1.06); }
+.collection-preview-empty { grid-column: span 3; color: var(--text-light); }
+
+.collection-card-info {
+    display: flex; flex-direction: column; gap: 6px;
+    padding: 12px 14px 14px;
+}
+.collection-card-name {
+    font-size: 0.76rem; font-weight: 700; color: var(--text);
+    line-height: 1.35;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.collection-card-meta {
+    display: flex; align-items: center; flex-wrap: wrap; gap: 6px;
+    font-size: 0.58rem; color: var(--text-muted);
+}
+.collection-card-meta a { color: var(--text-muted); }
+.collection-card-meta a:hover { color: var(--text); text-decoration: underline; }
+
+/* ============================================================
+   7. DETAIL KOLEKSI
+   ============================================================ */
+.collection-detail-page {
+    max-width: 1100px; margin: 0 auto;
+    padding: 40px 24px 80px;
+}
+.collection-detail-header {
+    padding-bottom: 20px; margin-bottom: 28px;
+    border-bottom: 1px solid var(--border);
+}
+.collection-detail-meta {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 12px;
+}
+.collection-detail-author {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 0.68rem; font-weight: 600; color: var(--text);
+}
+.collection-detail-author:hover { text-decoration: underline; }
+.collection-author-avatar {
+    width: 28px; height: 28px; border-radius: 50%;
+    overflow: hidden; flex-shrink: 0;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--bg-secondary); border: 1px solid var(--border);
+    font-size: 0.6rem; font-weight: 700;
+}
+.collection-author-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.collection-detail-date {
+    font-size: 0.58rem; color: var(--text-muted);
+}
+.collection-detail-date::before { content: "·"; margin-right: 8px; }
+.collection-detail-title {
+    font-size: 1.6rem; font-weight: 800; letter-spacing: -0.015em;
+    color: var(--text); margin-bottom: 8px;
+}
+.collection-detail-desc {
+    font-size: 0.78rem; line-height: 1.7; color: var(--text-muted);
+    max-width: 640px;
+}
+.collection-detail-actions {
+    display: flex; align-items: center; gap: 10px;
+    margin-top: 18px;
+}
+.btn-like-collection {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 8px 16px;
+    background: transparent;
+    border: 1px solid var(--border); border-radius: 100px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.64rem; font-weight: 600; color: var(--text-muted);
+    cursor: pointer; transition: all 0.2s;
+}
+.btn-like-collection:hover { border-color: var(--like); color: var(--like); }
+.btn-like-collection.liked {
+    border-color: var(--like); color: var(--like);
+    background: rgba(224,36,94,0.07);
+}
+.btn-delete-collection {
+    padding: 8px 16px;
+    background: transparent;
+    border: 1px solid var(--border); border-radius: 100px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.64rem; font-weight: 600; color: #e53e3e;
+    cursor: pointer; transition: all 0.2s;
+}
+.btn-delete-collection:hover { border-color: #e53e3e; background: rgba(229,62,62,0.08); }
+
+.collection-items-grid { gap: 18px; }
+
+/* ============================================================
+   8. FAVORIT SAYA — perbaikan grid & kartu
+   ============================================================ */
+.favorites-page {
+    max-width: 1000px; margin: 0 auto;
+    padding: 40px 24px 80px;
+}
+.favorites-title {
+    font-size: 1.35rem; font-weight: 800; color: var(--text);
+    padding-bottom: 14px; margin-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+}
+.favorites-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 18px;
+}
+.fav-item-card {
+    display: flex; flex-direction: column;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+}
+.fav-item-img-wrap {
+    aspect-ratio: 1 / 1;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+}
+.fav-item-img-wrap img { width: 78%; height: 78%; }
+.fav-item-info {
+    display: flex; flex-direction: column; gap: 3px;
+    padding: 12px 14px 14px;
+}
+.fav-item-name {
+    font-size: 0.72rem; line-height: 1.35;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.fav-item-name:hover { text-decoration: underline; }
+.fav-item-remove { position: absolute; top: 0; right: 0; }
+.fav-remove-btn { backdrop-filter: blur(4px); }
+
+/* ============================================================
+   9. PROFIL PUBLIK
+   ============================================================ */
+.profile-page {
+    max-width: 1000px; margin: 0 auto;
+    padding: 40px 24px 80px;
+}
+.profile-card {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas: "avatar info action" "stats stats stats";
+    align-items: start; gap: 22px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 26px;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 34px;
+}
+.profile-card-avatar {
+    grid-area: avatar;
+    width: 84px; height: 84px; border-radius: 50%;
+    overflow: hidden; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+}
+.profile-card-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.profile-avatar-letter {
+    font-size: 1.9rem; font-weight: 800; color: var(--text);
+}
+.profile-card-info {
+    grid-area: info;
+    display: flex; flex-direction: column; gap: 4px;
+    padding-top: 6px;
+}
+.profile-card-name {
+    font-size: 1.3rem; font-weight: 800; letter-spacing: -0.01em;
+    color: var(--text);
+}
+.profile-card-role {
+    font-size: 0.6rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--text-muted);
+}
+.profile-card-bio {
+    font-size: 0.74rem; line-height: 1.7; color: var(--text-muted);
+    margin-top: 6px; max-width: 520px;
+}
+.profile-card-action { grid-area: action; padding-top: 6px; }
+.btn-profile-edit-pill {
+    display: inline-flex; align-items: center;
+    padding: 9px 20px;
+    border: 1px solid var(--border); border-radius: 100px;
+    font-size: 0.62rem; font-weight: 700;
+    letter-spacing: 0.07em; text-transform: uppercase;
+    color: var(--text); white-space: nowrap;
+    transition: all 0.2s;
+}
+.btn-profile-edit-pill:hover { background: var(--primary); color: var(--bg); border-color: var(--primary); }
+
+.profile-card-stats {
+    grid-area: stats;
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+}
+.profile-stat-box {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    padding: 14px 10px;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    color: var(--text-muted);
+}
+.profile-stat-box svg { color: var(--text-muted); }
+.profile-stat-box-num {
+    font-size: 1rem; font-weight: 800; color: var(--text);
+}
+.profile-stat-box-label {
+    font-size: 0.55rem; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+}
+
+/* Body profil */
+.profile-body { display: flex; flex-direction: column; gap: 40px; }
+.profile-section-header {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 14px; flex-wrap: wrap;
+    margin-bottom: 16px;
+}
+.profile-section-title {
+    font-size: 0.72rem; font-weight: 800;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--text);
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--text);
+    display: inline-block;
+}
+.profile-section > .profile-section-title { margin-bottom: 16px; }
+.profile-empty {
+    font-size: 0.72rem; color: var(--text-muted);
+    padding: 26px;
+    text-align: center;
+    border: 1px dashed var(--border); border-radius: var(--radius-lg);
+}
+
+/* Review terbaru */
+.profile-reviews-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 14px;
+}
+.profile-review-card {
+    display: flex; align-items: flex-start; gap: 12px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 14px;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+.profile-review-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+    border-color: var(--text-light);
+}
+.profile-review-img {
+    width: 56px; height: 68px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--bg-secondary); border-radius: 8px;
+    overflow: hidden;
+}
+.profile-review-img img { width: 80%; height: 80%; object-fit: contain; }
+.profile-review-info { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.profile-review-name {
+    font-size: 0.72rem; font-weight: 700; color: var(--text);
+}
+.profile-review-stars { font-size: 0.68rem; color: var(--star); letter-spacing: 0.06em; }
+.profile-review-text {
+    font-size: 0.66rem; line-height: 1.6; color: var(--text-muted);
+}
+
+/* ============================================================
+   10. RESPONSIVE
+   ============================================================ */
+@media (max-width: 768px) {
+    .community-page,
+    .my-collections-page,
+    .collection-detail-page,
+    .favorites-page,
+    .profile-page { padding: 28px 16px 60px; }
+
+    .community-title { font-size: 1.2rem; }
+    .feed-tab { font-size: 0.6rem; padding: 8px 10px; }
+    .discussion-card { padding: 14px; }
+    .discussion-card-actions { flex-wrap: wrap; }
+    .btn-view-full { margin-left: 0; }
+
+    .collections-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .favorites-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+
+    .profile-card {
+        grid-template-columns: auto minmax(0, 1fr);
+        grid-template-areas: "avatar info" "action action" "stats stats";
+        gap: 16px; padding: 18px;
+    }
+    .profile-card-avatar { width: 64px; height: 64px; }
+    .profile-card-name { font-size: 1.1rem; }
+    .profile-card-action { padding-top: 0; }
+    .btn-profile-edit-pill { width: 100%; justify-content: center; }
+    .collection-detail-title { font-size: 1.25rem; }
+}
+@media (max-width: 480px) {
+    .profile-card-stats { gap: 6px; }
+    .profile-stat-box { padding: 10px 6px; }
+    .nested-replies { padding-left: 10px; }
+}

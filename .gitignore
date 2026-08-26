@@ -1,0 +1,61 @@
+# Dependencies
+/vendor
+/node_modules
+
+# Build output
+/public/build
+/public/hot
+/public/storage
+
+# Environment & rahasia
+.env
+.env.*
+!.env.example
+!.env.read-write-example
+auth.json
+
+# Database lokal
+*.sqlite
+*.sqlite-journal
+*.sqlite3
+*.sql
+*.db
+/parfumin
+/database/*.sqlite
+/database/database.sqlite
+
+# Storage & cache
+/storage/*.key
+/storage/app/public/*
+!/storage/app/public/.gitignore
+/storage/framework/cache/data/*
+/storage/framework/sessions/*
+/storage/framework/testing/*
+/storage/framework/views/*
+/storage/logs/*
+!/storage/logs/.gitignore
+/bootstrap/cache/*
+!/bootstrap/cache/.gitignore
+
+# Testing
+.phpunit.result.cache
+.phpunit.cache
+/coverage
+
+# Editor & OS
+/.idea
+/.vscode
+/.fleet
+/.nova
+/.zed
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# Log & backup
+*.log
+*.bak
+*.orig
+npm-debug.log
+yarn-error.log

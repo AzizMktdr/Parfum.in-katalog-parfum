@@ -1,0 +1,45 @@
+OPTIMASI PERFORMA — parfum.in
+================================
+
+1) EAGER LOADING (cegah N+1 query)
+   - app/Http/Controllers/ProductController.php
+       with(['brand:id,name,slug,logo','topNotes','middleNotes','baseNotes','accords',
+             'reviews' => fn($q) => $q->with('user:id,name')->latest()])
+       + withCount('reviews')
+   - resources/views/detail.blade.php
+       daftar review sekarang memakai koleksi yang sudah di-eager load
+       (sebelumnya: $product->reviews()->latest()->limit(5)->get() = query tiap render)
+   - app/Http/Controllers/CollectionController.php  (myCollections)
+       with(['items' => fn($q) => $q->with('product:id,slug,name,image')])
+   - resources/views/collections/index.blade.php
+       preview gambar pakai $col->items (sebelumnya query di dalam @foreach = N+1)
+
+2) INDEX DATABASE
+   File baru: database/migrations/2026_08_26_000001_add_search_and_relation_indexes.php
+   Jalankan: php artisan migrate
+   Aman diulang (skip tabel/kolom/index yang tidak ada atau sudah ada),
+   mendukung MySQL, PostgreSQL, dan SQLite.
+
+3) MINIFIKASI CSS / JS / GAMBAR
+   File baru: tools/minify.mjs  +  app/Support/Asset.php
+   package.json:  "minify": "node tools/minify.mjs",  "build": "vite build && npm run minify"
+   Jalankan: npm run minify
+   Layout memakai \App\Support\Asset::css(...) -> otomatis pilih .min.css di production
+   dan menambah ?v=filemtime (cache busting).
+   Hasil pengukuran:
+     app.css     57.9 KB -> 41.4 KB
+     auth.css     4.4 KB ->  3.1 KB
+     follow.css   4.3 KB ->  2.9 KB
+     images (48)  5.5 MB ->  2.5 MB  (+ versi .webp tiap gambar)
+   Folder public/images di zip ini SUDAH versi teroptimasi, timpa saja folder lama.
+
+   Untuk memakai WebP di gambar produk:
+     <picture>
+       <source srcset="{{ str_replace('.png','.webp',$img) }}" type="image/webp">
+       <img src="{{ $img }}" loading="lazy" decoding="async" alt="">
+     </picture>
+
+SETELAH SEMUA DITIMPA:
+   php artisan migrate
+   npm run minify
+   php artisan optimize:clear

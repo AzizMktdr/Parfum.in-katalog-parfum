@@ -1,0 +1,201 @@
+/* ============================================================
+   FOLLOW BUTTON (di halaman profil)
+   ============================================================ */
+.btn-follow {
+    padding: 9px 24px;
+    background: var(--primary);
+    color: var(--bg);
+    border: none;
+    border-radius: 100px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.btn-follow:hover { opacity: 0.85; }
+
+.btn-follow.following {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+}
+
+.btn-follow.following:hover {
+    border-color: #e74c3c;
+    color: #e74c3c;
+}
+
+/* ── Stat link (followers/following clickable) ── */
+.profile-stat-link {
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.profile-stat-link:hover { opacity: 0.7; }
+
+/* ============================================================
+   FOLLOWERS / FOLLOWING LIST PAGE
+   ============================================================ */
+.followers-page-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+}
+
+.followers-back-link {
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    transition: background 0.2s;
+}
+
+.followers-back-link:hover { background: var(--bg-secondary); }
+
+.followers-page-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0;
+}
+
+.followers-page-sub {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+}
+
+.followers-tabs {
+    display: flex;
+    gap: 4px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 8px;
+}
+
+.followers-tab {
+    padding: 10px 16px;
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+}
+
+.followers-tab.active {
+    color: var(--text);
+    border-bottom-color: var(--text);
+}
+
+.followers-list { display: flex; flex-direction: column; }
+
+.follower-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 4px;
+    border-bottom: 1px solid var(--border);
+}
+
+.follower-item-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    flex: 1;
+    min-width: 0;
+}
+
+.follower-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--bg-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.follower-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+.follower-name {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.follower-username {
+    display: block;
+    font-size: 0.62rem;
+    color: var(--text-muted);
+}
+
+.btn-follow-small {
+    padding: 6px 16px;
+    background: var(--primary);
+    color: var(--bg);
+    border: none;
+    border-radius: 100px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.60rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.btn-follow-small.following {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+}
+
+/* ============================================================
+   FEED FILTER TOGGLE (Semua / Mengikuti)
+   ============================================================ */
+.feed-filter-toggle {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.feed-filter-pill {
+    padding: 6px 16px;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    font-size: 0.62rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.feed-filter-pill:hover { border-color: var(--text-muted); color: var(--text); }
+
+.feed-filter-pill.active {
+    background: var(--primary);
+    color: var(--bg);
+    border-color: var(--primary);
+}
+
+@media (max-width: 480px) {
+    .follower-item-info { gap: 10px; }
+    .follower-avatar { width: 36px; height: 36px; }
+}
