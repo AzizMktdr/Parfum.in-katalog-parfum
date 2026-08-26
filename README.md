@@ -469,7 +469,3 @@ Project ini dikembangkan sebagai aplikasi katalog dan komunitas parfum dengan fo
 - serta administrasi data melalui Filament.
 
 ---
-
-## 📄 License
-
-This project is licensed under the **MIT License**.
